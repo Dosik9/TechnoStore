@@ -1,2 +1,2 @@
 # TechnoStore
-this is online store that sells technology. 
+This is an online store that sells appliances.
