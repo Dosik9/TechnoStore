@@ -87,7 +87,8 @@ class CategoryController extends Controller
             $path=$request->file('image')->store('categories', 'public');
         }
         $category->image=$path;
-        $category->update($request->only('name', 'slug_name','image'));
+
+        $category->update($request->only('name', 'slug_name'));
         return redirect()->route('categories.index')->with('success', 'Category has been edited!');
     }
 

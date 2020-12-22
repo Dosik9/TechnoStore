@@ -48,10 +48,18 @@ class ProductController extends Controller
             $product->image=$path;
         }
 
+        foreach (['new','hit','recommend'] as $fieldname){
+            if($request->input($fieldname)=='on'){
+                $product->$fieldname = 1;
+            }else{
+                $product->$fieldname=0;
+            }
+        }
         $product->name=$request->input('name');
         $product->slug_name=$request->input('slug_name');
         $product->description=$request->input('desc');
         $product->price=$request->input('price');
+        $product->discount=$request->input('discount');
         $product->brand_id=$request->input('brand_id');
         $product->category_id=$request->input('category_id');
         $product->save();
@@ -95,10 +103,17 @@ class ProductController extends Controller
             $path=$product->image;
         }
         else{
-            $path=$request->file('image')->store('categories', 'public');
+            $path=$request->file('image')->store('products', 'public');
         }
         $product->image=$path;
-        $product->update($request->only('name', 'slug_name', 'description', 'price', 'brand_id', 'category_id'));
+        foreach (['new','hit','recommend'] as $fieldname){
+            if($request->input($fieldname)=='on'){
+                $product->$fieldname = 1;
+            }else{
+                $product->$fieldname=0;
+            }
+        }
+        $product->update($request->only('name', 'slug_name', 'description', 'price', 'brand_id', 'category_id','discount'));
         return redirect()->route('products.index')->with('success', 'Product has been edited!');
     }
 

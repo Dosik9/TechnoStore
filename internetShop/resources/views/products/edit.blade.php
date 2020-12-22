@@ -64,6 +64,21 @@
                                 <option value="{{$category->id}}" @if ($product->category->id==$category->id) selected @endif>{{$category->name}}</option>
                             @endforeach
                         </select>
+                        <br>
+                        <label for="">Discount:</label>
+                        <input type="number" min="0.00" max="100" name="discount" class="form-control" value="{{old('discount',isset($product->discount) ? $product->discount : null)}}">
+                        <br>
+                        @foreach(['hit'=>'Hit','new'=>'New','recommend'=>'Recommended'] as $field=>$title)
+                            <div class="form-group" >
+                                <label for="">{{$title}}:</label>
+                                <input type="checkbox" name="{{$field}}" id="{{$field}}"
+                                       @if(isset($product)&& $product->$field ===1)
+                                       checked="checked"
+                                    @endif
+                                >
+                            </div>
+                        @endforeach
+                        <br>
                         <li class="list-group-item">
                             <input type="submit" value="EDIT" class="btn btn-info">
                         </li>

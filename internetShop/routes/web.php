@@ -31,29 +31,36 @@ use \App\Http\Controllers\OrderController;
 
 require __DIR__.'/auth.php';
 
-Route::get('/',[MainController::class, 'index'])->name('home');
-Route::get('/p/{slug_name}',[MainController::class, 'product'])->name('product-page');
-Route::get('/all-categories',[MainController::class, 'p_store'])->name('store');
+Route::middleware(['set_locale'])->group(function (){
+    Route::get('/',[MainController::class, 'index'])->name('home');
+    Route::get('/locale/{locale}', [MainController::class, 'changeLang'])->name('locale');
+    Route::get('/p/{slug_name}',[MainController::class, 'product'])->name('product-page');
+    Route::get('/{slug_name}/p',[MainController::class, 'p_category'])->name('category');
+    Route::get('/all-categories',[MainController::class, 'p_store'])->name('store');
+    Route::get('/result/',[MainController::class,'p_search'])->name('search');
 
 
 
-Route::group(['middleware'=>'auth'], function (){
-    Route::get('/basket', [OrderController::class, 'basket'])->name('basket');
-    Route::post('basket/order', [OrderController::class, 'order'])->name('order');
-    Route::post('basket/order/save', [OrderController::class, 'confirmOrder'])->name('order-save');
-    Route::post('/basket/add/{id}', [OrderController::class, 'basketAdd'])->name('basket-add');
-    Route::post('/basket/remove/{id}', [OrderController::class, 'basketRemove'])->name('basket-remove');
+    Route::group(['middleware'=>'auth'], function (){
+        Route::get('/basket', [OrderController::class, 'basket'])->name('basket');
+        Route::post('basket/order', [OrderController::class, 'order'])->name('order');
+        Route::post('basket/order/save', [OrderController::class, 'confirmOrder'])->name('order-save');
+        Route::post('/basket/add/{id}', [OrderController::class, 'basketAdd'])->name('basket-add');
+        Route::post('/basket/remove/{id}', [OrderController::class, 'basketRemove'])->name('basket-remove');
 
-Route::group(['middleware'=>'is_admin'], function (){
-    Route::resource('/brands',BrandController::class);
-    Route::resource('/categories',CategoryController::class);
-    Route::resource('/subcategories',SubcategoryController::class);
-    Route::resource('/telecoms',TelecommunicationController::class);
-    Route::resource('/products',ProductController::class);
-    Route::resource('/orders',OrderController::class);
+        Route::group(['middleware'=>'is_admin'], function (){
+            Route::resource('/brands',BrandController::class);
+            Route::resource('/categories',CategoryController::class);
+            Route::resource('/subcategories',SubcategoryController::class);
+            Route::resource('/telecoms',TelecommunicationController::class);
+            Route::resource('/products',ProductController::class);
+            Route::resource('/orders',OrderController::class);
+        });
+
+
+    });
 });
 
 
-});
 
 

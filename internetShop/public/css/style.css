@@ -74,6 +74,17 @@ a {
   transition: 0.2s color;
 }
 
+.size {
+    white-space: nowrap; /* Отменяем перенос текста */
+    overflow: hidden; /* Обрезаем содержимое */
+    padding: 5px; /* Поля */
+    text-overflow: ellipsis; /* Многоточие */
+}
+.size:hover {
+    background: #f0f0f0; /* Цвет фона */
+    white-space: normal; /* Обычный перенос текста */
+}
+
 a:hover, a:focus {
   color: #D10024;
   text-decoration: none;
@@ -857,8 +868,8 @@ textarea.input {
   margin: 15px 0px;
   -webkit-box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
   box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
-  -webkit-transition: 0.2s all;
-  transition: 0.2s all;
+  -webkit-transition: 0.1s all;
+  transition: 0.1s all;
 }
 
 .product:hover {
@@ -892,12 +903,17 @@ textarea.input {
   color: #D10024;
 }
 
-.product .product-img .product-label>span.new {
+.product .product-img .product-label>span.hit {
   background-color: #D10024;
   border-color: #D10024;
   color: #FFF;
 }
 
+.product .product-img .product-label>span.new {
+    background-color: #17A2B8;
+    border-color: #17A2B8;
+    color: #FFF;
+}
 .product .product-body {
   position: relative;
   padding: 15px;

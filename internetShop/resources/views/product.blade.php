@@ -55,9 +55,25 @@
                         </div>
                         <a class="review-link" href="#">10 Review(s) | Add your review</a>
                     </div>
+                    <div class="product-label">Labels:
+                        @if($product->isDiscount())
+                            <span class="sale">-{{$product->discount}}%</span>
+                        @endif
+                        @if($product->isNew())
+                            <span class="new">NEW</span>
+                        @endif
+
+                        @if($product->isHit())
+                            <span class="hit">Hit</span>
+                        @endif
+                    </div>
                     <div>
-                        <h3 class="product-price">{{$product->price}} <del class="product-old-price">{{($product->price)*1.2}}</del></h3>
-                        <span class="product-available">In Stock</span>
+
+                        @if($product->isDiscount())
+                            <h4 class="product-price">{{$product->sumDiscount()}} <del class="product-old-price">{{($product->price)}}</del></h4>
+                        @else
+                            <h4 class="product-price">{{($product->price)}}</h4>
+                        @endif                        <span class="product-available">In Stock</span>
                     </div>
                     <p>{{$product->description}}</p>
 

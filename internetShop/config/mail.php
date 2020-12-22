@@ -45,17 +45,24 @@ return [
             'auth_mode' => null,
         ],
 
+//        'ses'=>'default',
         'ses' => [
             'transport' => 'ses',
         ],
 
+//        'mailgun'=>'default',
+
         'mailgun' => [
             'transport' => 'mailgun',
+            'domain' => env('MAILGUN_DOMAIN'),
+            'secret' => env('MAILGUN_SECRET'),
         ],
+
 
         'postmark' => [
             'transport' => 'postmark',
         ],
+//    'postmark'=>'default',
 
         'sendmail' => [
             'transport' => 'sendmail',

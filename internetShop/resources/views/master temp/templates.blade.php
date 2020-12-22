@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Electro: @yield('title')</title>
+    <title>@lang('main.title'): @yield('title')</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -26,8 +26,11 @@
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
 
+
+    {{--    // Flags--}}
+    <link type="text/css" rel="stylesheet" href="{{asset('css/flags/css/flag-icon.css')}}">
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="{{asset('css/style.css')}}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('css/style.css')}}">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,12 +54,13 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
             </ul>
             <ul class="header-links pull-right">
+                <li><a href="{{route('locale',__('main.set_lang'))}}"><i class="fa fa-flag"></i> @lang('main.set_lang')</a></li>
                 <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
                 @guest
                 <li>
-                    <a href="{{route('login')}}"><i class="fa fa-user-o"></i> Login</a></li>
+                    <a href="{{route('login')}}"><i class="fa fa-user-o"></i> @lang('main.login')</a></li>
                 <li>
-                    <a href="{{route('register')}}"> Register</a></li>
+                    <a href="{{route('register')}}"> @lang('main.register')</a></li>
                 @endguest
                             @auth
 {{--                                <li>--}}
@@ -65,7 +69,7 @@
 {{--                </li>--}}
 
                 @if(Auth::user()->is_admin==1)
-                    <li><a href="{{route('categories.index')}}"> Administration</a></li>
+                    <li><a href="{{route('categories.index')}}"> @lang('main.Administration')</a></li>
                     @endif
                 <li >
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,7 +79,7 @@
                         <li>
 {{--                            <a href="{{route('logout')}}" >Logout</a>--}}
                             <form method="POST" action="{{ route('logout') }}">
-                                <button class="btn bg-transparent">Logout</button>
+                                <button class="btn bg-transparent">@lang('main.Logout')</button>
                                 @csrf
                             </form>
                         </li>
@@ -108,14 +112,14 @@
 
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form >
+                        <form action="{{route('search')}}" method="GET">
                             <select class="input-select" style="width: 25%">
                                 @foreach($caths as $category)
                                     <option  value="{{$category->id}}" style="margin-left: 10px">{{$category->name}} ({{$category->products->count()}})</option>
                                 @endforeach
                             </select>
-                            <input class="input" style="width: 60%" placeholder="Search here">
-                            <button type="submit"  class="search-btn" style="width: 15%"  >Search</button>
+                            <input class="input" style="width: 60%" name="word" placeholder="Search here">
+                            <button type="submit"  class="search-btn" style="width: 15%"  >@lang('main.search')</button>
                         </form>
                     </div>
                 </div>
@@ -129,7 +133,7 @@
                         <div>
                             <a href="#">
                                 <i class="fa fa-heart-o"></i>
-                                <span>Your Wishlist</span>
+                                <span>@lang('main.your_wishlist')</span>
                                 <div class="qty">2</div>
                             </a>
                         </div>
@@ -139,7 +143,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
+                                <span>@lang('main.your_cart')</span>
                                 <div class="qty">3</div>
                             </a>
 
@@ -182,11 +186,11 @@
                                 </div>
                                 <div class="cart-summary">
                                     <small>3 Item(s) selected</small>
-                                    <h5>SUBTOTAL: $2940.00</h5>
+                                    <h5>@lang('main.subtotal'): $2940.00</h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="{{route('basket')}}">View Cart</a>
-                                    <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="{{route('basket')}}">@lang('main.view_cart')</a>
+                                    <a href="#">@lang('main.chekout')  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +200,7 @@
                         <div class="menu-toggle">
                             <a href="#">
                                 <i class="fa fa-bars"></i>
-                                <span>Menu</span>
+                                <span>@lang('main.menu')</span>
                             </a>
                         </div>
                         <!-- /Menu Toogle -->
@@ -220,13 +224,22 @@
         <div id="responsive-nav">
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
-                <li @routeactive('home') ><a href="{{route('home')}}">Home</a></li>
-                <li @routeactive('store')><a href="{{route('store')}}">Store</a></li>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Smartphones</a></li>
-                <li><a href="#">Cameras</a></li>
-                <li><a href="#">Accessories</a></li>
-                <li @routeactive('basket*')><a href="{{route('basket')}}">Basket</a></li>
+                <li @routeactive('home') ><a href="{{route('home')}}">@lang('main.home')</a></li>
+                <li @routeactive('store')><a href="{{route('store')}}">@lang('main.store')</a></li>
+                <li @routeactive('basket*')><a href="{{route('basket')}}">@lang('main.basket')</a></li>
+                <li @routeactive('categor*')>
+                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @lang('main.categories')
+                        </a>
+                        <ul class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <li>
+                                @foreach($caths as $cat)
+                                <a class="dropdown-item" href="{{route('category',$cat->slug_name)}}">{{$cat->name}}</a>
+                                @endforeach
+                            </li>
+                        </ul>
+                </li>
+
             </ul>
             <!-- /NAV -->
         </div>

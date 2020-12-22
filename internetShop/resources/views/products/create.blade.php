@@ -53,6 +53,20 @@
                             @endforeach
                         </select>
                         <br>
+                        <label for="">Discount:</label>
+                        <input type="number" min="0.00" max="100" name="discount" class="form-control" value="{{old('discount')}}">
+                        <br>
+                        @foreach(['hit'=>'Hit','new'=>'New','recommend'=>'Recommended'] as $field=>$title)
+                            <div class="form-group" >
+                                <label for="">{{$title}}:</label>
+                                <input type="checkbox" name="{{$field}}" id="{{$field}}"
+                                    @if(isset($product)&& $product->$field ===1)
+                                        checked="checked"
+                                       @endif
+                                >
+                            </div>
+                                @endforeach
+                        <br>
                         <input type="submit" class="btn btn-primary" value="ADD">
                     </div>
                 </form>
