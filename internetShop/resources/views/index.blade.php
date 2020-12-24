@@ -162,7 +162,7 @@
                             <!-- tab -->
                             <div id="tab2" class="tab-pane fade in active">
                                 <div class="products-slick" data-nav="#slick-nav-2">
-                                    @foreach($newproducts as $product)
+                                    @foreach($hitproducts as $product)
                                         @include('master temp.one_product')
                                     @endforeach
                                 </div>

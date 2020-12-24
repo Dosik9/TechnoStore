@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -17,13 +18,14 @@ class MainController extends Controller
     public function index(){
         $categories =Category::all()->random(3);
         $caths=Category::all();
-        $order=Order::all();
+//        $order=Order::all();
 
 //        $newproducts = Product::all()->where('id','>',Product::max('id')-Product::all()->count()+1);
-        $newproducts = Product::all();
+        $newproducts = Product::all()->where('new',1);
+        $hitproducts = Product::all()->where('hit',1);
 
 
-        return view('index', compact(['categories', 'newproducts', 'caths','order']));
+        return view('index', compact(['categories', 'newproducts','hitproducts', 'caths']));
     }
 
     public function header(){
@@ -40,17 +42,38 @@ class MainController extends Controller
         $caths =Category::all();
         $product=Product::where('slug_name',$prod)->first();
         $products=Product::all();
-        $order=Order::all();
+//        $order=Order::all();
 //        dd($product);
-        return view('product',compact(['product','caths','products','order']));
+        return view('product',compact(['product','caths','products']));
     }
 
-    public function p_store(){
+    public function p_store(Request $request){
+//        dump($request->all());
         $caths=Category::all();
         $brands=Brand::all();
-        $products=Product::all();
         $top_sellings=Product::all()->where('id','>',Product::max('id')-3);
-//        dd($top_sellings);
+
+        $productQuery=Product::query();
+        if($request->filled('price_min')){
+            $productQuery->where('price','>=',$request->price_min);
+        }
+        if($request->filled('price_max')){
+            $productQuery->where('price','<=',$request->price_max);
+        }
+
+        if($request->filled('p_label')){
+            if ($request->p_label != 'all') {
+                $productQuery->where($request->p_label, 1);
+            }
+        }
+
+        if($request->filled('n_paginate')){
+            $products=$productQuery->paginate($request->n_paginate);
+        }else{
+            $products=$productQuery->paginate(6);
+        }
+
+//        dump($products);
         return view('store',compact(['caths','brands','products', 'top_sellings']));
     }
 

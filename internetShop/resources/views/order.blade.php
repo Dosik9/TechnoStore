@@ -18,13 +18,13 @@
                         <h3 class="title">Billing address</h3>
                     </div>
                     <div class="form-group">
-                        <input class="input" type="text" name="name" placeholder="First Name" value="{{old()}}">
+                        <input class="input" type="text" name="name" placeholder="First Name" value="{{old('name')}}">
                         @error('name')
                         <div class="alert alert-danger">{{$message}}</div>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <input class="input" type="tel" name="telnum" placeholder="Telephone" value="{{old()}}">
+                        <input class="input" type="tel" name="telnum" placeholder="Telephone" value="{{old('telnum')}}">
                         @error('telnum')
                         <div class="alert alert-danger">{{$message}}</div>
                         @enderror
