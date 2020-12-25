@@ -13,7 +13,7 @@ return [
     'Logout'=>'Выйти',
     'your_wishlist' =>'Ваши Пожелания',
     'your_cart'=>'Ваша Корзина',
-    'search'=>'пойск',
+    'search'=>'поиск',
     'new_products'=>'Новые продукты',
     'shop_now'=>'Купить сейчас',
     'menu'=>'Меню',
